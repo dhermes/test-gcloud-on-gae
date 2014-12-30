@@ -8,7 +8,7 @@ import calendar
 import datetime
 
 from google.protobuf.internal.type_checkers import Int64ValueChecker
-import pytz
+from pytz.gae import pytz  # Originally import pytz.
 import six
 
 from gcloud.datastore.entity import Entity
