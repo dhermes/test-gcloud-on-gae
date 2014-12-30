@@ -7,4 +7,4 @@ mkdir application/vendor/
 cp -r protobuf/lib/python2.7/site-packages/google/ application/vendor/
 deactivate
 rm -fr protobuf/
-git add application/google/
+git add application/vendor/
