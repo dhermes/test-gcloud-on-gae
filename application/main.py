@@ -1,5 +1,7 @@
 import webapp2
 
+from gcloud import datastore
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
