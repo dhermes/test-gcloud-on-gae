@@ -54,7 +54,6 @@ for name, value in BASE_DATA.items():
     prop = INSERT_AUTO.property.add()
     # Set the name of the property.
     prop.name = name
-    prop.value
 
     # Set the appropriate value.
     helpers._set_protobuf_value(prop.value, value)
