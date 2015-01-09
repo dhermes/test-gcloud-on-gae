@@ -24,6 +24,9 @@ else:
 
 
 class Foo(ndb.Model):
+    _use_memcache = False
+    _use_cache = False
+
     now = ndb.DateTimeProperty(auto_now_add=True)
     nickname = ndb.BlobProperty(indexed=True)
     email = ndb.BlobProperty(indexed=True)
@@ -39,7 +42,8 @@ def make_entity(user):
     start = time.time()
     entity.save()
     duration = time.time() - start
-    logging.debug('Saving %r took %f seconds.', entity.key(), duration)
+    logging.debug('Saving with gcloud-python %r took %f seconds.',
+                  entity.key(), duration)
     return entity
 
 
@@ -50,8 +54,8 @@ def make_ndb_entity(user):
     start = time.time()
     foo_entity.put()
     duration = time.time() - start
-    logging.debug('Saving %r took %f seconds.', foo_entity.key,
-                  duration)
+    logging.debug('Saving with NDB %r took %f seconds.',
+                  foo_entity.key, duration)
     return foo_entity
 
 
