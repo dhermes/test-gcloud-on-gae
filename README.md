@@ -62,7 +62,7 @@ Hacks Used
 ==========
 
 - [Disabling][3] GCE environ check since we know we're on App Engine.
-- Using [`gae-pytz`][5] and [Updating][5] `pytz` imports for App Engine.
+- Using [`gae-pytz`][5] and [Updating][4] `pytz` imports for App Engine.
 - [Removing][6] dependency on `pkg_resources.get_distribution` for
   application version (used in User Agent).
 
