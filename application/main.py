@@ -4,6 +4,7 @@ import time
 
 from google.appengine.api.app_identity import get_application_id
 from google.appengine.api import users
+from google.appengine.ext import ndb
 from google.appengine.ext.webapp.util import login_required
 import webapp2
 
@@ -22,6 +23,13 @@ else:
     DATASET = CONNECTION.dataset(APP_NAME)
 
 
+class Foo(ndb.Model):
+    now = ndb.DateTimeProperty(auto_now_add=True)
+    nickname = ndb.BlobProperty(indexed=True)
+    email = ndb.BlobProperty(indexed=True)
+    user_id = ndb.BlobProperty(indexed=True)
+
+
 def make_entity(user):
     entity = DATASET.entity('Foo')
     entity['now'] = datetime.datetime.utcnow()
@@ -35,6 +43,18 @@ def make_entity(user):
     return entity
 
 
+def make_ndb_entity(user):
+    foo_entity = Foo(nickname=user.nickname(),
+                     email=user.email(),
+                     user_id=user.user_id())
+    start = time.time()
+    foo_entity.put()
+    duration = time.time() - start
+    logging.debug('Saving %r took %f seconds.', foo_entity.key,
+                  duration)
+    return foo_entity
+
+
 class MainHandler(webapp2.RequestHandler):
 
     @login_required
@@ -46,7 +66,19 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(message)
 
 
+class NDBHandler(webapp2.RequestHandler):
+
+    @login_required
+    def get(self):
+        user = users.get_current_user()
+        foo_entity = make_ndb_entity(user)
+        key_id = foo_entity.key.id()
+        message = 'Key saved: %d' % (key_id,)
+        self.response.write(message)
+
+
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/ndb', NDBHandler),
 ], debug=True)
