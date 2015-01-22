@@ -128,7 +128,7 @@ class Test__pb_attr_value(unittest2.TestCase):
     def test_datetime_naive(self):
         import calendar
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         naive = datetime.datetime(2014, 9, 16, 10, 19, 32, 4375)  # No zone.
         utc = datetime.datetime(2014, 9, 16, 10, 19, 32, 4375, pytz.utc)
@@ -140,7 +140,7 @@ class Test__pb_attr_value(unittest2.TestCase):
     def test_datetime_w_zone(self):
         import calendar
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         utc = datetime.datetime(2014, 9, 16, 10, 19, 32, 4375, pytz.utc)
         name, value = self._callFUT(utc)
@@ -238,7 +238,7 @@ class Test__get_value_from_value_pb(unittest2.TestCase):
     def test_datetime(self):
         import calendar
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         utc = datetime.datetime(2014, 9, 16, 10, 19, 32, 4375, pytz.utc)
         micros = (calendar.timegm(utc.timetuple()) * 1000000) + 4375
@@ -341,7 +341,7 @@ class Test_set_protobuf_value(unittest2.TestCase):
     def test_datetime(self):
         import calendar
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         pb = self._makePB()
         utc = datetime.datetime(2014, 9, 16, 10, 19, 32, 4375, pytz.utc)

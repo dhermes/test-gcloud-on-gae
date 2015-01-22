@@ -10,7 +10,7 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from OpenSSL import crypto
-import pytz
+from pytz.gae import pytz  # Originally import pytz.
 
 from gcloud.connection import Connection as _Base
 from gcloud.storage import exceptions

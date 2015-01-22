@@ -682,7 +682,7 @@ class Test__get_expiration_seconds(unittest2.TestCase):
 
     def test__get_expiration_w_utc_datetime(self):
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         expiration_utc = datetime.datetime(2004, 8, 19, 0, 0, 0, 0, pytz.utc)
         utc_seconds = self._utc_seconds(expiration_utc)
@@ -690,7 +690,7 @@ class Test__get_expiration_seconds(unittest2.TestCase):
 
     def test__get_expiration_w_other_zone_datetime(self):
         import datetime
-        import pytz
+        from pytz.gae import pytz  # Originally import pytz.
 
         zone = pytz.timezone('CET')
         expiration_other = datetime.datetime(2004, 8, 19, 0, 0, 0, 0, zone)
