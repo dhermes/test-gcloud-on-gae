@@ -1,0 +1,18 @@
+Metadata-Version: 1.1
+Name: gcloud
+Version: 0.3.0
+Summary: API Client library for Google Cloud
+Home-page: https://github.com/GoogleCloudPlatform/gcloud-python
+Author: JJ Geewax
+Author-email: jj@geewax.org
+License: Apache 2.0
+Description: UNKNOWN
+Platform: Posix; MacOS X; Windows
+Classifier: Development Status :: 1 - Planning
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Internet

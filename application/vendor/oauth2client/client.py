@@ -93,7 +93,7 @@ AccessTokenInfo = collections.namedtuple(
 
 DEFAULT_ENV_NAME = 'UNKNOWN'
 class SETTINGS(object):
-  """Settings namespace for globally."""
+  """Settings namespace for globally defined values."""
   env_name = None
 
 
@@ -930,7 +930,23 @@ def _detect_gce_environment(urlopen=None):
       Boolean indicating whether or not the current environment is Google
           Compute Engine.
   """
-  return False
+  urlopen = urlopen or urllib.request.urlopen
+  # Note: the explicit `timeout` below is a workaround. The underlying
+  # issue is that resolving an unknown host on some networks will take
+  # 20-30 seconds; making this timeout short fixes the issue, but
+  # could lead to false negatives in the event that we are on GCE, but
+  # the metadata resolution was particularly slow. The latter case is
+  # "unlikely".
+  try:
+    response = urlopen('http://169.254.169.254/', timeout=1)
+    return response.info().get('Metadata-Flavor', '') == 'Google'
+  except socket.timeout:
+    logger.info('Timeout attempting to reach GCE metadata service.')
+    return False
+  except urllib.error.URLError as e:
+    if isinstance(getattr(e, 'reason', None), socket.timeout):
+      logger.info('Timeout attempting to reach GCE metadata service.')
+    return False
 
 
 def _get_environment(urlopen=None):
@@ -1600,7 +1616,7 @@ def credentials_from_code(client_id, client_secret, scope, code,
     client_id: string, client identifier.
     client_secret: string, client secret.
     scope: string or iterable of strings, scope(s) to request.
-    code: string, An authroization code, most likely passed down from
+    code: string, An authorization code, most likely passed down from
       the client
     redirect_uri: string, this is generally set to 'postmessage' to match the
       redirect_uri that the client specified

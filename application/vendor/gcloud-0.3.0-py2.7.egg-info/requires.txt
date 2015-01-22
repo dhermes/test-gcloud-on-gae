@@ -1,0 +1,7 @@
+httplib2
+oauth2client
+protobuf >= 2.5.0
+pycrypto
+pyopenssl
+pytz
+six
